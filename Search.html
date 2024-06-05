@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" href="search.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Poppins:wght@100;300&family=Poppins:wght@100;300;400&family=Poppins:wght@100;300;400;600&family=Poppins:wght@100;300;400;600;700&family=Poppins:wght@100;300;400;600&family=Poppins:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+</head>
+
+<body>
+    <section class="header"> 
+        <nav>
+            <a href="index.html"><img src="kidkindplanetlogo.PNG"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li> 
+                    <li><a href="Music.html">MUSIC</a></li> 
+                    <li><a href="Movies.html">MOVIES</a></li>
+                    <li><a href="">SOFTWARES</a></li> 
+                    <li><a href="search.html">SEARCH</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <h1> Search</h1>
+            <input type="search" name="" id="search" class="hero-btn" placeholder="Type here to search" oninput="liveSearch()">
+            <button class="hero-btn" onclick="performSearch()">Search</button>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section class="music">
+        <img src="Attention2.ico" width="60px" height="60px">
+        <h1>Important Notice</h1>
+        <p>The search engine is currently not working.</p>
+        <p>Our team is working tirelessly to solve the problem.</p>
+        <p>Thanks for understanding.</p> 
+    </section>
+
+    <!-- Javascript for Toggle Menu and Search Functionality -->
+    <script>
+        // Toggle Menu
+        var navlinks = document.getElementById("navlinks");
+        function showMenu() {
+            navlinks.style.right = "0";
+        };
+        function hideMenu() {
+            navlinks.style.right = "-200px";
+        };
+
+        // Sample data (replace with your actual data)
+        const posts = [
+            { id: 1, title: "Post 1", content: "This is the content of Post 1" },
+            { id: 2, title: "Mack-Earn x Nelson", content: "Could You Tell" },
+            { id: 3, title: "Mack-Earn x Sentick", content: "Never Give Up" },
+            { id: 4, title: "Post 4", content: "This is the content of Post 4" }
+        ];
+
+        // Function to perform live search
+        function liveSearch() {
+            var searchQuery = document.getElementById('search').value.trim().toLowerCase();
+            var searchResultsHTML = '';
+
+            // Only perform search if the search query is not empty
+            if (searchQuery !== '' && searchQuery.length > 0) {
+                // Filter posts based on search query
+                var filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchQuery));
+
+                // Build HTML for live search results
+                if (filteredPosts.length > 0) {
+                    searchResultsHTML += '<ul>';
+                    filteredPosts.forEach(post => {
+                        searchResultsHTML += '<li><a href="search results.html" onclick="viewPost(' + post.id + ')">' + post.title + '</a></li>';
+                    });
+                    searchResultsHTML += '</ul>';
+                }
+
+                // Display live search results
+                document.getElementById('liveSearchResults').innerHTML = searchResultsHTML;
+            } else {
+                // Clear live search results if search query is empty
+                document.getElementById('liveSearchResults').innerHTML = '';
+            }
+        }
+
+        // Function to perform search (redirect to search results page)
+        function performSearch() {
+            var searchQuery = document.getElementById('search').value;
+            
+            // Check if the search query is not empty
+            if (searchQuery.trim() !== '') {
+                // Redirect to the search results page with the search query as a parameter
+                window.location.href = 'search results.html?query=' + encodeURIComponent(searchQuery);
+            } else {
+                // Handle the case when the search query is empty
+                alert('Please enter a search query.');
+            }
+        }
+
+        // Function to view the post
+        function viewPost(postId) {
+            // You can replace this with the actual URL of the post
+            window.location.href = 'post.html?id=' + postId;
+        }
+    </script>
+    <!-- Live search results -->
+    <div id="liveSearchResults"></div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="search results.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Poppins:wght@100;300&family=Poppins:wght@100;300;400&family=Poppins:wght@100;300;400;600&family=Poppins:wght@100;300;400;600;700&family=Poppins:wght@100;300;400;600&family=Poppins:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+</head>
+
+<body>
+    <section class="header"> 
+        <nav>
+            <a href="index.html"><img src="kidkindplanetlogo.PNG"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li> 
+                    <li><a href="Music.html">MUSIC</a></li> 
+                    <li><a href="Movies.html">MOVIES</a></li>
+                    <li><a href="">SOFTWARES</a></li> 
+                    <li><a href="search.html">SEARCH</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <h1>Search Results</h1>
+        </div>
+    </section>
+
+    <!-- Search Results Section -->
+    <section class="search-results">
+        <!-- Search results will be displayed here -->
+    </section>
+
+    <!-- Javascript for Toggle Menu -->
+    <script>
+        // Toggle Menu
+        var navlinks = document.getElementById("navlinks");
+        function showMenu() {
+            navlinks.style.right = "0";
+        };
+        function hideMenu() {
+            navlinks.style.right = "-200px";
+        };
+    </script>
+
+    <!-- Extracting search query from URL -->
+    <script>
+        // Function to get the search query from the URL
+        function getSearchQuery() {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('query');
+        }
+
+        // Sample data (replace with your actual data)
+        const posts = [
+            { id: 1, title: "Post 1", content: "This is the content of Post 1" },
+            { id: 2, title: "Post 2", content: "This is the content of Post 2" },
+            { id: 3, title: "Post 3", content: "This is the content of Post 3" },
+            { id: 4, title: "Post 4", content: "This is the content of Post 4" }
+        ];
+
+        // Function to display search results
+        function displaySearchResults() {
+            var searchQuery = getSearchQuery();
+            var searchResultsHTML = '';
+
+            // Check if search query exists
+            if (searchQuery !== null) {
+                // Display search query
+                searchResultsHTML += '<h2>Search Query: ' + searchQuery + '</h2>';
+
+                // Filter posts based on search query
+                var filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+                // Display search results
+                if (filteredPosts.length > 0) {
+                    searchResultsHTML += '<ul>';
+                    filteredPosts.forEach(post => {
+                        searchResultsHTML += '<li><a href="audios page 1.html?id=' + post.id + '"><h3>' + post.title + '</h3></a><p>' + post.content + '</p></li>';
+                    });
+                    searchResultsHTML += '</ul>';
+                } else {
+                    searchResultsHTML += '<p>No results found for "' + searchQuery + '".</p>';
+                }
+            } else {
+                searchResultsHTML += '<p>No search query found.</p>';
+            }
+
+            // Display search results in the search results section
+            document.querySelector('.search-results').innerHTML = searchResultsHTML;
+        }
+
+        // Call the function to display search results when the page loads
+        window.onload = displaySearchResults;
+    </script>
+</body>
+</html>
